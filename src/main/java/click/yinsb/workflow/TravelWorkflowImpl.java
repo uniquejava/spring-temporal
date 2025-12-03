@@ -90,6 +90,7 @@ public class TravelWorkflowImpl implements TravelWorkflow {
 
         } catch (Exception e) {
             log.error("❌ Error during travel booking for user: {}. Initiating compensation.", travelRequest.getUserId());
+            log.error(e.getMessage(), e);
             saga.compensate();
         }
 

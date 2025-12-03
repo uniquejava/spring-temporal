@@ -43,3 +43,11 @@ services:
       - '--web.enable-lifecycle'
     depends_on:
       - temporal
+
+  # Jaeger
+  jaeger-all-in-one:
+    image: jaegertracing/all-in-one:1.70.0
+    ports:
+      - "16686:16686"
+      - "14268:14268"
+      - "14250:14250"

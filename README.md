@@ -61,3 +61,10 @@ For Temporal-specific custom metrics (what https://docs.temporal.io/develop/java
 
 So, wire the Prometheus registry as a Spring bean, share it with Temporal’s reporter, and use Micrometer MeterRegistry for any purely Spring metrics. Once everything points to the same registry, custom_metric (and any other
 Temporal metrics) will be visible via Actuator.
+
+## References
+
+1. https://github.com/temporalio/samples-java/blob/637c2e66fd2dab43d9f3f39e5fd9c55e4f3884f0/core/src/main/java/io/temporal/samples/metrics/MetricsWorker.java
+2. https://github.com/temporalio/samples-java/blob/637c2e66fd2dab43d9f3f39e5fd9c55e4f3884f0/core/src/main/java/io/temporal/samples/metrics/workflow/MetricsWorkflowImpl.java
+
+

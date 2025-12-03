@@ -1,6 +1,6 @@
-package com.javatechie.workflow;
+package click.yinsb.workflow;
 
-import com.javatechie.dto.TravelRequest;
+import click.yinsb.dto.TravelRequest;
 import io.temporal.workflow.SignalMethod;
 import io.temporal.workflow.WorkflowInterface;
 import io.temporal.workflow.WorkflowMethod;

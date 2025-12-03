@@ -1,8 +1,7 @@
-package com.javatechie.config;
+package click.yinsb.config;
 
-import com.javatechie.activities.TravelActivitiesImpl;
-import com.javatechie.workflow.TravelWorkflow;
-import com.javatechie.workflow.TravelWorkflowImpl;
+import click.yinsb.activities.TravelActivitiesImpl;
+import click.yinsb.workflow.TravelWorkflowImpl;
 import io.temporal.client.WorkflowClient;
 import io.temporal.serviceclient.WorkflowServiceStubs;
 import io.temporal.worker.Worker;

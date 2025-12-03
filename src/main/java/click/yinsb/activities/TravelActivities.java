@@ -1,6 +1,6 @@
-package com.javatechie.activities;
+package click.yinsb.activities;
 
-import com.javatechie.dto.TravelRequest;
+import click.yinsb.dto.TravelRequest;
 import io.temporal.activity.ActivityInterface;
 
 @ActivityInterface

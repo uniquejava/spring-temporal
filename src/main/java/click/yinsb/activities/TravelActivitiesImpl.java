@@ -1,6 +1,6 @@
-package com.javatechie.activities;
+package click.yinsb.activities;
 
-import com.javatechie.dto.TravelRequest;
+import click.yinsb.dto.TravelRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -49,7 +49,7 @@ public class TravelActivitiesImpl implements TravelActivities {
                 travelRequest.getTravelDate());
 
         //simulate a failure to demonstrate compensation
-       throw new RuntimeException("Simulated transport arrangement failure!");
+        // throw new RuntimeException("Simulated transport arrangement failure!");
     }
 
     @Override

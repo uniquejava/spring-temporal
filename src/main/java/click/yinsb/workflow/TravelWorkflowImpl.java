@@ -1,7 +1,7 @@
-package com.javatechie.workflow;
+package click.yinsb.workflow;
 
-import com.javatechie.activities.TravelActivities;
-import com.javatechie.dto.TravelRequest;
+import click.yinsb.activities.TravelActivities;
+import click.yinsb.dto.TravelRequest;
 import io.temporal.activity.ActivityOptions;
 import io.temporal.common.RetryOptions;
 import io.temporal.workflow.Saga;

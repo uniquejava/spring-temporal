@@ -1,4 +1,4 @@
-package com.javatechie.dto;
+package click.yinsb.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

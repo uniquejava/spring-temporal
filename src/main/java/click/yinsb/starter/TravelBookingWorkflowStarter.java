@@ -1,7 +1,7 @@
-package com.javatechie.starter;
+package click.yinsb.starter;
 
-import com.javatechie.dto.TravelRequest;
-import com.javatechie.workflow.TravelWorkflow;
+import click.yinsb.dto.TravelRequest;
+import click.yinsb.workflow.TravelWorkflow;
 import io.temporal.client.WorkflowClient;
 import io.temporal.client.WorkflowOptions;
 import io.temporal.serviceclient.WorkflowServiceStubs;

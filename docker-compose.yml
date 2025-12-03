@@ -1,12 +1,10 @@
-version: '3.7'
-
 services:
   temporal:
-    image: temporalio/auto-setup:1.21.5
+    image: temporalio/auto-setup:1.29.1
     ports:
       - "7233:7233"           # SDK connection port
     environment:
-      - DB=postgresql
+      - DB=postgres12
       - DB_PORT=5432
       - POSTGRES_USER=temporal
       - POSTGRES_PWD=temporal
@@ -23,7 +21,7 @@ services:
       - "5432:5432"
 
   temporal-ui:
-    image: temporalio/ui:latest
+    image: temporalio/ui:2.43.3
     ports:
       - "8088:8080"           # Web UI
     environment:

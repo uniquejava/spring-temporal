@@ -1,7 +1,7 @@
-package com.javatechie.controller;
+package click.yinsb.controller;
 
-import com.javatechie.dto.TravelRequest;
-import com.javatechie.starter.TravelBookingWorkflowStarter;
+import click.yinsb.dto.TravelRequest;
+import click.yinsb.starter.TravelBookingWorkflowStarter;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

@@ -6,15 +6,13 @@ import com.google.common.collect.ImmutableMap;
 import com.uber.m3.tally.RootScopeBuilder;
 import com.uber.m3.tally.Scope;
 import com.uber.m3.tally.StatsReporter;
-import io.micrometer.prometheusmetrics.PrometheusConfig;
-import io.micrometer.prometheusmetrics.PrometheusMeterRegistry;
+import io.micrometer.core.instrument.MeterRegistry;
 import io.temporal.client.WorkflowClient;
 import io.temporal.common.reporter.MicrometerClientStatsReporter;
 import io.temporal.serviceclient.WorkflowServiceStubs;
 import io.temporal.serviceclient.WorkflowServiceStubsOptions;
 import io.temporal.worker.Worker;
 import io.temporal.worker.WorkerFactory;
-import jakarta.annotation.PostConstruct;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -37,29 +35,29 @@ public class TemporalConfig {
         worker.registerWorkflowImplementationTypes(TravelWorkflowImpl.class);
         worker.registerActivitiesImplementations(new TravelActivitiesImpl());
 
+        factory.start();
         return factory;
     }
 
     /**
      * Provides a WorkflowServiceStubs bean for connecting to the Temporal service.
+     * Connect Temporal SDK metrics to Spring's global MeterRegistry so
+     * counters recorded inside workflows/activities appear on /actuator/prometheus.
      *
      * @return WorkflowServiceStubs instance
      */
     @Bean
-    public WorkflowServiceStubs serviceStubs() {
+    public WorkflowServiceStubs serviceStubs(MeterRegistry registry) {
 
         // see the Micrometer documentation for configuration details on other supported monitoring systems.
         // in this example shows how to set up Prometheus registry and stats reported.
-        PrometheusMeterRegistry registry = new PrometheusMeterRegistry(PrometheusConfig.DEFAULT);
         StatsReporter reporter = new MicrometerClientStatsReporter(registry);
         // set up a new scope, report every 10 seconds
         Scope scope = new RootScopeBuilder()
                 .tags(
                         ImmutableMap.of(
-                                "starterCustomTag1",
-                                "starterCustomTag1Value",
-                                "starterCustomTag2",
-                                "starterCustomTag2Value"))
+                                "source",
+                                "spring-temporal"))
                 .reporter(reporter)
                 .reportEvery(com.uber.m3.util.Duration.ofSeconds(10));
         // for Prometheus collection, expose a scrape endpoint.
@@ -69,13 +67,5 @@ public class TemporalConfig {
                 WorkflowServiceStubsOptions.newBuilder().setMetricsScope(scope).build();
 
         return WorkflowServiceStubs.newServiceStubs(stubOptions);
-    }
-
-    /**
-     * Starts the Temporal worker after the Spring context is initialized.
-     */
-    @PostConstruct
-    public void startWorker() {
-        workerFactory(serviceStubs()).start();
     }
 }

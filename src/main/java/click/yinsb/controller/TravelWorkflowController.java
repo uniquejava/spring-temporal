@@ -24,7 +24,7 @@ public class TravelWorkflowController {
 
     // Endpoint to confirm the booking by sending a signal to the workflow
     @PostMapping("/confirm/{userId}")
-    public ResponseEntity<String> confirmBooking(@RequestParam String userId) {
+    public ResponseEntity<String> confirmBooking(@PathVariable String userId) {
         starter.sendConfirmationSignal(userId);
         return ResponseEntity.ok("✅ Booking confirmed by user!");
     }

@@ -2,6 +2,7 @@ package click.yinsb.workflow;
 
 import click.yinsb.activities.TravelActivities;
 import click.yinsb.dto.TravelRequest;
+import com.uber.m3.tally.Scope;
 import io.temporal.activity.ActivityOptions;
 import io.temporal.common.RetryOptions;
 import io.temporal.workflow.Saga;
@@ -11,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
+import java.util.Collections;
 
 @Service
 @Slf4j
@@ -30,6 +32,15 @@ public class TravelWorkflowImpl implements TravelWorkflow {
     public void bookTrip(TravelRequest travelRequest) {
 
         log.info("🚀 Starting travel booking for user: {}", travelRequest.getUserId());
+
+        /*
+         * Custom metric, we can use child scope and attach workflow_id as it's not attached by default
+         * like task_queue ,workflow_type, etc
+         */
+        Scope scope =
+                Workflow.getMetricsScope()
+                        .tagged(Collections.singletonMap("workflow_id", Workflow.getInfo().getWorkflowId()));
+        scope.counter("custom_metric").inc(1);
 
         TravelActivities activities = Workflow.newActivityStub(TravelActivities.class,
                 ActivityOptions.newBuilder()

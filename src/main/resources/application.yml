@@ -1,0 +1,17 @@
+spring.application.name: spring-temporal
+
+server.port: 9191
+
+spring.main.allow-circular-references: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: prometheus,temporalworkerinfo,scheduledtasks,shutdown
+    health:
+      group:
+        liveness:
+          include: livenessstate,cacheCheck
+      probes:
+        enabled: true

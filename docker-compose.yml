@@ -2,13 +2,17 @@ services:
   temporal:
     image: temporalio/auto-setup:1.29.1
     ports:
-      - "7233:7233"           # SDK connection port
+      - "7233:7233"
+      - "9090:9090"# SDK connection port
     environment:
       - DB=postgres12
       - DB_PORT=5432
       - POSTGRES_USER=temporal
       - POSTGRES_PWD=temporal
       - POSTGRES_SEEDS=postgres
+      # Enable metrics - using standard environment variables
+      - PROMETHEUS_ENDPOINT=0.0.0.0:9090
+      - SERVICES=frontend,history,matching,worker
     depends_on:
       - postgres
 
@@ -26,5 +30,16 @@ services:
       - "8088:8080"           # Web UI
     environment:
       - TEMPORAL_ADDRESS=temporal:7233
+    depends_on:
+      - temporal
+  prometheus:
+    image: prom/prometheus:v2.46.0
+    ports:
+      - "9091:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--web.enable-lifecycle'
     depends_on:
       - temporal

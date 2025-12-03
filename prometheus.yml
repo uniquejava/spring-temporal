@@ -1,0 +1,18 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  # Temporal Server metrics (frontend/history/matching all on :9090)
+  - job_name: "temporal"
+    static_configs:
+      - targets: ["temporal:9090"]
+    metrics_path: /metrics
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: instance
+        replacement: "temporal-oss-local"
+  - job_name: "spring-temporal"
+    static_configs:
+      - targets: ["host.docker.internal:9191"]
+    metrics_path: /actuator/prometheus
